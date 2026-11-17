@@ -89,7 +89,20 @@ The outage benchmark's higher throughput must not be interpreted as proof that t
 
 A custom table-stats snapshot showed LAB2's average read latency higher than the other nodes (19.821 ms versus 7.722 ms and 5.127 ms), but sample counts were small and no performance RCA was justified. JMX Exporter returned approximately 1.2 MB and took several seconds to scrape; that is a monitoring payload consideration, not a confirmed database slowdown.
 
-## 8. Dated activity – 16 November 2026
+## 8. Dated progress snapshot – 31 October 2026
+
+The retained early project guide states that progress was captured through 31 October 2026. It records 12,100 synthetic rows for the transaction-date partition 2026-10-30; the partition date is not assumed to be the date of setup or ingestion.
+
+- Established the three CentOS Stream 9 VM layout and Cassandra 4.1.12 cluster configuration.
+- Created banking_stream and bank_transactions; a 12,100-row synthetic partition for 2026-10-30 was recorded.
+- Built the Python app structure, environment configuration, driver connection module, transaction generator and prepared synchronous insert path.
+- Recorded an early 1,000-row workload at 6.063 seconds (about 164.94 inserts/second). The elapsed-time-per-row number was not a clean per-request latency measurement.
+- Added Node Exporter, the Cassandra JVM JMX Exporter agent, Prometheus and Grafana. The last captured pre-shutdown state showed seven Prometheus targets UP.
+- Resolved Grafana-to-Prometheus SELinux network permission using the persistent grafana_can_tcp_connect_prometheus_port boolean.
+- Recorded cqlsh failure through 127.0.0.1 while the private node IP worked; the original rpc_address/listener evidence was not retained.
+- Recorded shutdown-script nested SSH quoting trouble and Cassandra service exit status 143 after drain; Cassandra was stopped manually and process/port verification was part of the safe-shutdown guidance.
+
+See [31 October activity snapshot](../../daily-activity/2026-10-31.md).
 
 - Stopped LAB2 for a controlled node outage while LAB1/LAB3 remained available.
 - Inserted 1,000 transactions through Python using LOCAL_QUORUM: 1,000 successful, 0 failed.
@@ -103,7 +116,7 @@ A custom table-stats snapshot showed LAB2's average read latency higher than the
 
 See [16 November daily activity](../../daily-activity/2026-11-16.md).
 
-## 9. Dated activity – 17 November 2026
+## 10. Dated activity – 17 November 2026
 
 - Confirmed Cassandra 4.1.12 on all three nodes.
 - Reviewed Commit Log configuration on all nodes; archive and restore parameters remained empty; precision was MICROSECONDS.
