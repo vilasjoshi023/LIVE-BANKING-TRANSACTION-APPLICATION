@@ -104,6 +104,8 @@ The retained early project guide states that progress was captured through 31 Oc
 
 See [31 October activity snapshot](../../daily-activity/2026-10-31.md).
 
+## 9. Dated activity – 16 November 2026
+
 - Stopped LAB2 for a controlled node outage while LAB1/LAB3 remained available.
 - Inserted 1,000 transactions through Python using LOCAL_QUORUM: 1,000 successful, 0 failed.
 - Restarted LAB2 and later verified all three nodes UN.
