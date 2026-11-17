@@ -129,7 +129,7 @@ See [16 November daily activity](../../daily-activity/2026-11-16.md).
 
 See [17 November daily activity](../../daily-activity/2026-11-17.md).
 
-## 10. Current status and next steps
+## 11. Current status and next steps
 
 ### Completed and evidenced
 - Three-node Cassandra cluster and banking schema.
@@ -153,6 +153,6 @@ See [17 November daily activity](../../daily-activity/2026-11-17.md).
 - Design and test PITR before any configuration activation.
 - Do not touch the deferred VJC9LAB3 `viasroot` cleanup unless expressly requested.
 
-## 11. Daily record policy
+## 12. Daily record policy
 
 Use one `daily-activity/YYYY-MM-DD.md` file for each actual work session. Record the real date, the exact action performed, observed output, RCA and correction if there was an error, performance measurements, validation and next work. If there was no new activity or no evidence, do not invent a log entry or result.
