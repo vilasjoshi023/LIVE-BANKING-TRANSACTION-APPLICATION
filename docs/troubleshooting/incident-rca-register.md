@@ -204,3 +204,16 @@ For these, the runbook directs the DBA to inspect exporter service and target la
 - Root cause and why alternative hypotheses were ruled out.
 - Change performed, rollback plan and before/after result.
 - Performance or availability impact, where measured.
+
+
+### RCA-014 – cqlsh to localhost failed while private IP worked
+
+**Symptom:** The retained project guide records that cqlsh to 127.0.0.1 failed while cqlsh to the node's private IP worked.
+
+**Investigation / guidance recorded:** Use the verified node IP and inspect Cassandra `rpc_address` and native transport configuration if needed.
+
+**Root cause:** The exact `rpc_address` value and full error output were not retained. A precise bind-address root cause is therefore not asserted.
+
+**Workaround and validation:** Use `cqlsh 192.168.62.134 9042`; the private-IP connection succeeded.
+
+**Status:** Connection workaround verified. Root cause is only partially established because the original listener/configuration evidence is unavailable.
