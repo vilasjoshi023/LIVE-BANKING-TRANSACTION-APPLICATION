@@ -4,6 +4,10 @@ A hands-on database engineering project demonstrating a multi-node Apache Cassan
 
 > **Lab environment:** Three CentOS Stream 9 VMware VMs. This is a learning and validation environment, not a production banking service. All results are lab observations and must not be represented as production SLAs or capacity guarantees.
 
+## Project study material
+
+- [Live Banking Project Complete Study Book v2 (PDF)](Live_Banking_Project_Complete_Study_Book_v2.pdf)
+
 ## Technology stack
 
 - Apache Cassandra 4.1.12, three nodes, one datacenter (`dc1`)
