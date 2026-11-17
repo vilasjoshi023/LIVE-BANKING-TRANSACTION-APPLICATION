@@ -2,21 +2,19 @@
 
 This folder records project work by date. Every entry separates verified execution from proposed, pending or deferred work.
 
-## Dated activity records
-- [30 October 2026 – Initial retained lab operations, cluster checks and DBA health snapshot](2026-10-30.md)
-- [31 October 2026 – Cassandra JMX Exporter and Prometheus bring-up; Python workload reporting work](2026-10-31.md)
-- [13 November 2026 – Cassandra JMX metric review and internode connectivity investigation](2026-11-13.md)
+## Dated records
+- [31 October 2026 – Initial integrated project status snapshot](2026-10-31.md)
 - [16 November 2026 – Failure recovery, repair, backup and restore](2026-11-16.md)
 - [17 November 2026 – Commit Log archiving preparation](2026-11-17.md)
 
 ## Consolidated earlier project history
-- [Project milestones from initial retained evidence to current state](historical-milestones.md)
-- [Full project lifecycle record](../docs/project-history/project-from-start-to-current.md)
+- [Project milestones](historical-milestones.md)
+- [Full project lifecycle, troubleshooting and performance history](../docs/project-history/project-from-start-to-current.md)
 
-The earliest detailed dated evidence currently retained is 30 October 2026. Earlier preparatory work may have occurred, but exact activity dates are not assigned unless supported by notes or terminal evidence.
+The earliest dated source available is a project guide with progress captured through 31 October 2026. It records 12,100 synthetic transactions for the data partition dated 30 October 2026; this data date is not treated as the date of the setup activity. Preparatory activities without exact timestamps remain in the consolidated history.
 
 ## Daily operating process
-At the end of each project session, record the actual date, objective, work performed, exact validation evidence, errors/fixes, status and next safe action. When no new work is reported, do not create a fabricated or empty entry.
+At the end of each actual project session, record the real date, objective, work performed, commands/results, errors and RCA, performance measurements, validation, and next safe action. When no new work is reported, do not create a fabricated or empty entry.
 
 - [Reusable activity template](activity-template.md)
 
