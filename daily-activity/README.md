@@ -6,6 +6,7 @@ This folder records project work by date. Every entry separates verified executi
 - [31 October 2026 – Initial integrated project status snapshot](2026-10-31.md)
 - [16 November 2026 – Failure recovery, repair, backup and restore](2026-11-16.md)
 - [17 November 2026 – Commit Log archiving preparation](2026-11-17.md)
+- [18 November 2026 – Cassandra workload benchmarking and performance diagnostics](2026-11-18.md)
 
 ## Consolidated earlier project history
 - [Project milestones](historical-milestones.md)
