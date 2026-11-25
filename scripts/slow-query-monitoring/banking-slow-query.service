@@ -1,0 +1,18 @@
+[Unit]
+Description=Banking Application Cassandra Slow Query Test
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+WorkingDirectory=/opt/banking-app
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/banking-app/venv/bin/python -m src.slow_query_lab
+TimeoutStartSec=120
+Nice=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=banking-slow-query
+
