@@ -1,0 +1,39 @@
+groups:
+  - name: banking-slow-query-lab
+    interval: 30s
+    rules:
+      - alert: BankingSlowQueryDetected
+        expr: sum(banking_slow_query_last_run_slow_requests) > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: Slow synthetic banking query detected
+          description: At least one request in the latest 100-query lab run took 100 ms or longer.
+
+      - alert: BankingSlowQueryP95High
+        expr: max(banking_slow_query_last_run_latency_ms_p95) > 100
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Slow-query P95 exceeded 100 ms
+          description: P95 latency for one or more query types exceeded the lab threshold of 100 ms.
+
+      - alert: BankingSlowQueryFailures
+        expr: sum(banking_slow_query_last_run_errors) > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Synthetic banking query failures detected
+          description: The latest 100-query lab run reported one or more failed requests.
+
+      - alert: BankingSlowQueryMetricsStale
+        expr: time() - max(banking_slow_query_last_run_timestamp_seconds) > 600
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Slow-query workload metrics are stale
+          description: No successful slow-query workload metrics have been published in more than ten minutes.
