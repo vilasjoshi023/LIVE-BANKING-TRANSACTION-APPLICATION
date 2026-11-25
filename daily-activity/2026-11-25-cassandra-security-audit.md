@@ -82,7 +82,7 @@ Observed on LAB1:
 
 The tablestats values are node-local observations, not a cluster-wide audit of all table data.
 
-The role inventory contained only the cassandra role. No separate DBA, banking application or reporting roles had yet been created.
+At the initial anonymous-access baseline, the role inventory contained only the cassandra role. Subsequent authenticated pilot work created separate DBA, banking application and reporting roles; see the authentication pilot section below.
 
 ## 4. Pre-authentication snapshot
 
@@ -210,7 +210,7 @@ Identified the following Python modules referencing the central Cassandra connec
 - /opt/banking-app/src/transaction_concurrent_test.py
 - /opt/banking-app/src/slow_query_lab.py
 
-The connection factory source has not yet been reviewed in this audit session. No credentials or .env content were collected or committed.
+The central connection factory was reviewed and enhanced with optional PlainTextAuthProvider support. The updated module was syntax-checked and tested against the still-anonymous Cassandra cluster; it connected successfully and retained LOCAL_QUORUM. No username/password variables were configured during this preparation test. The .env file permission was changed to 0600 (root:root), and a pre-authentication copy of cassandra_connection.py was retained. No .env values or credentials were collected or committed.
 
 The systemd service inventory showed banking-slow-query.service as a static unit, along with cassandra-prometheus-metrics.service and cassandra.service.
 
@@ -253,8 +253,8 @@ Completed:
 
 Not completed:
 - Cassandra connection factory source review and credential-injection design.
-- Creation and validation of separate DBA, banking application and reporting roles.
-- PasswordAuthenticator rollout.
+- Validation of banking_app and banking_readonly logins (role presence is confirmed, but their login tests have not yet been reported).
+- PasswordAuthenticator rollout to LAB1 and LAB2; LAB3 pilot only is complete.
 - CassandraAuthorizer rollout and least-privilege grants.
 - Default superuser credential rotation and retirement.
 - Client TLS and internode TLS rollout.
@@ -273,4 +273,94 @@ Not completed:
 7. Design audit logging filters, storage, rotation and retention before enabling it.
 8. Validate effective firewalld access paths and restrict SSH/metrics access to intended management sources.
 
-No Cassandra authenticator/authorizer configuration change, TLS change, audit-logging change, SSH change, firewall modification or Cassandra restart was performed during this audit. The only Cassandra configuration metadata change in this activity was the system_auth replication-strategy update documented above.
+The initial read-only assessment did not change authenticator/authorizer settings. Subsequent staged authentication work changed authenticator to PasswordAuthenticator on LAB3 only and restarted that node; an authenticated cqlsh session to LAB3 succeeded. LAB1 and LAB2 remain on AllowAllAuthenticator. All three nodes still use AllowAllAuthorizer; authorization has not been enabled. No TLS, audit-logging, SSH or firewall changes were made. The system_auth replication-strategy update and the LAB3 authentication pilot are the Cassandra configuration changes performed to date.
+
+## 14. Follow-up implementation – authentication pilot and Python client preparation
+
+This section records work completed after the initial read-only audit on 25 November 2026. It supersedes any earlier statements in this document that describe role creation or the authentication rollout as wholly pending.
+
+### Python connection factory preparation
+
+Reviewed /opt/banking-app/src/cassandra_connection.py. The original factory:
+- Loaded /opt/banking-app/config/.env.
+- Used three contact points, native transport port 9042, local DC dc1 and keyspace banking_stream.
+- Used DCAwareRoundRobinPolicy and set LOCAL_QUORUM.
+- Did not configure a Cassandra authentication provider.
+
+Confirmed that transaction_insert.py, transaction_concurrent_test.py and slow_query_lab.py all call the shared get_cassandra_session() factory.
+
+Security preparation:
+- Created src/cassandra_connection.py.bak.pre_auth_20261125 before replacing the source.
+- Changed /opt/banking-app/config/.env permissions from 0644 to 0600, owner root:root.
+- Enhanced cassandra_connection.py with optional PlainTextAuthProvider support using CASSANDRA_USERNAME and CASSANDRA_PASSWORD.
+- Added validation requiring the username and password to be configured together, plus required connection-setting validation.
+- Preserved the three contact points, port 9042, dc1 load balancing, banking_stream keyspace and LOCAL_QUORUM consistency.
+- Syntax validation passed.
+- The configuration diagnostic reported three contact points, port 9042, dc1, banking_stream and authentication provider not configured.
+- A connection test successfully connected to cluster VJCLAB, keyspace banking_stream, and printed consistency value 6 (LOCAL_QUORUM). This test used the still-anonymous configuration and did not validate credential authentication.
+
+No .env contents, passwords, tokens or credential values are stored in this repository.
+
+### Authentication pilot on LAB3
+
+- Backed up /opt/cassandra/conf/cassandra.yaml on LAB3 to cassandra.yaml.pre_auth_20261125.
+- Changed only LAB3's authenticator from AllowAllAuthenticator to PasswordAuthenticator.
+- Restarted LAB3's Cassandra service.
+- Successfully connected to 192.168.62.136:9042 using the cassandra username and the password entered at the interactive prompt.
+- LIST ROLES succeeded in the authenticated session.
+- The Non-system keyspaces don't have the same replication settings, effective ownership information is meaningless message was observed with nodetool status/metadata output. It is an informational ownership-calculation warning due to differing keyspace replication configurations, not evidence of a node being down.
+
+### Roles created on LAB3 using authenticated DBA access
+
+The authenticated dba_admin session returned the following role inventory:
+
+| Role | Login | Superuser | Intended responsibility |
+|---|---|---|---|
+| cassandra | true | true | Default superuser; temporary during migration |
+| dba_admin | true | true | Replacement DBA administration |
+| banking_app | true | false | Banking application runtime |
+| banking_readonly | true | false | Read-only/reporting client |
+
+The successful prompt dba_admin@cqlsh and subsequent LIST ROLES output verify that the dba_admin account authenticated successfully. The LIST ROLES output confirms that banking_app and banking_readonly exist with login enabled and superuser disabled. Their separate password-login tests have not yet been evidenced.
+
+No role was created with a superuser grant for the application or reporting roles.
+
+### Current per-node state after the pilot
+
+The latest captured configuration comparison showed:
+
+| Node | authenticator | authorizer | Current state |
+|---|---|---|---|
+| VJC9LAB1 | AllowAllAuthenticator | AllowAllAuthorizer | Not migrated |
+| VJC9LAB2 | AllowAllAuthenticator | AllowAllAuthorizer | Not migrated |
+| VJC9LAB3 | PasswordAuthenticator | AllowAllAuthorizer | Authentication pilot |
+
+This is a mixed-authenticator transition state. LAB3 requires credentials, while LAB1 and LAB2 still accept anonymous connections. The cluster is not yet fully secured.
+
+Cassandra authorization is not yet enabled on any node. CassandraAuthorizer has not been configured; no least-privilege grants have been applied; and the current banking_app/banking_readonly role names do not yet enforce different permissions while AllowAllAuthorizer remains active.
+
+### Scheduled workload coordination
+
+Before further node authentication/authorization restarts, the operator was instructed to pause banking-slow-query.timer and verify that banking-slow-query.service was inactive. A stop command was issued, but no post-stop status output has yet been recorded in the audit evidence. Therefore the current timer state is marked unverified pending a fresh systemctl is-active and systemctl list-timers check.
+
+### Current completion status
+
+Completed:
+- Python connection factory enhanced with optional authentication support and validated against the anonymous pilot-compatible state.
+- .env permission hardened to 0600.
+- LAB3 PasswordAuthenticator pilot configured and tested with an authenticated cqlsh login.
+- Replacement dba_admin login verified.
+- banking_app and banking_readonly role records created and visible in LIST ROLES.
+- LAB1/LAB2 configuration comparison confirms they have not yet migrated to PasswordAuthenticator.
+
+Pending:
+- Verify login separately as banking_app and banking_readonly.
+- Verify the current state of the slow-query timer and service before further maintenance.
+- Review whether application credentials should be held in a root-only environment file or a dedicated secret-management mechanism; do not populate credentials until client TLS is in place or an explicitly approved protected test path is defined.
+- Enable CassandraAuthorizer only after preparing and testing the required permissions and rollout/rollback plan.
+- Grant only the permissions required by each application role and test allowed/denied operations.
+- Roll out authentication and then authorization to LAB1 and LAB2 using the Cassandra 4.1 documented rolling procedure.
+- Rotate/retire the default cassandra superuser only after replacement DBA access is validated on the full cluster.
+- Validate every scheduled/application client after authentication and authorization enforcement.
+
+No authorization, TLS, audit-logging, SSH or firewall changes have been made. The application-role logins and cross-node authenticated operation remain unverified.
