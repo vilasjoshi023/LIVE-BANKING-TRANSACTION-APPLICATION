@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Banking Cassandra Slow Query Test Every Five Minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=5min
+AccuracySec=15s
+Unit=banking-slow-query.service
+
+[Install]
+WantedBy=timers.target
