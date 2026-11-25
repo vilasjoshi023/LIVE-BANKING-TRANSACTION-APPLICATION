@@ -8,6 +8,8 @@ This folder contains the source and deployment unit files for the synthetic 100-
 - `slow_query_metrics_exporter.py`: Publishes latest-run aggregate metrics to the Node Exporter textfile collector.
 - `banking-slow-query.service`: systemd oneshot service to run the Python workload.
 - `banking-slow-query.timer`: systemd timer template with a two-minute boot delay and a five-minute interval after each service run.
+- `grafana-slow-query-dashboard.json`: Importable Grafana dashboard with 10 panels for request totals, errors, slow requests, last-run age, average/P95/P99/maximum latency, successes and failures.
+- `banking-slow-query-alerts.yml`: Prometheus alert rules for slow requests, high P95, query failures and stale metrics.
 
 ## Runtime assumptions
 
@@ -87,6 +89,20 @@ The five-minute timer is intentionally **not enabled by this repository change**
 systemctl enable --now banking-slow-query.timer
 systemctl list-timers banking-slow-query.timer --no-pager
 ```
+
+## Grafana dashboard import
+
+1. Open Grafana and select **Dashboards → New → Import**.
+2. Upload `grafana-slow-query-dashboard.json`.
+3. Select the Prometheus datasource used by the Cassandra lab when prompted.
+4. Import the dashboard as **Banking Application - Slow Query Monitoring**.
+5. Set the dashboard range to **Last 1 hour**. The dashboard is configured to refresh every 30 seconds and shows the two query types separately.
+
+This imports a dedicated dashboard and does not overwrite the existing general DBA dashboard. Panels can be copied into the existing dashboard after import if a combined view is preferred.
+
+## Prometheus alert rules
+
+The file `banking-slow-query-alerts.yml` contains four lab rules. To activate them, copy it into a Prometheus rules directory, add that path to the existing Prometheus `rule_files` configuration, validate with `promtool check rules`, and reload Prometheus using the method configured for the lab. Do not replace the existing Prometheus configuration. Prometheus alert evaluation does not by itself configure email or other notifications; Alertmanager routing is a separate setup.
 
 ## Operational cautions
 
