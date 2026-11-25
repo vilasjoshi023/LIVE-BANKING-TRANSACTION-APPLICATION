@@ -30,7 +30,7 @@ groups:
           description: The latest 100-query lab run reported one or more failed requests.
 
       - alert: BankingSlowQueryMetricsStale
-        expr: time() - max(banking_slow_query_last_run_timestamp_seconds) > 600
+        expr: absent(banking_slow_query_last_run_timestamp_seconds) or (time() - max(banking_slow_query_last_run_timestamp_seconds) > 600)
         for: 2m
         labels:
           severity: warning
