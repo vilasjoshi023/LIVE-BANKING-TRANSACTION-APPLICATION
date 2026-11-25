@@ -50,7 +50,7 @@ Cassandra cluster configuration observed: cluster VJCLAB, datacenter dc1, rack r
 - Prometheus previously showed seven scrape targets UP. Custom Cassandra table metrics were manually generated and scraped. A one-minute systemd timer was proposed but not verified as installed/active.
 - Commit Log archive script v2.0 was deployed on all nodes and exercised with dummy files only.
 
-## Current project status – 17 November 2026
+## Historical project status – 17 November 2026
 
 **In progress:** Validate Cassandra 4.1.12 archive callback and failure/retry semantics; harden the archive script's no-overwrite behaviour; test all dummy-file branches; design and validate PITR recovery.
 
@@ -63,3 +63,20 @@ Cassandra cluster configuration observed: cluster VJCLAB, datacenter dc1, rack r
 Never commit passwords, tokens, private SSH keys, .env files, real customer/banking data, raw Commit Logs, SSTables, snapshots or backup directories. Only publish sanitised examples, scripts, synthetic data and documentation. Keep confidential employer/customer details out of the repository.
 
 See docs/README.md and daily-activity/README.md.
+
+
+## Current project status – 25 November 2026
+
+**Cassandra security audit:** A first-pass security audit was completed across all three nodes. The current configuration has AllowAllAuthenticator, AllowAllAuthorizer, client TLS disabled, internode encryption set to none, and Cassandra audit logging disabled. Anonymous CQL access to the banking keyspace and system_auth role metadata was demonstrated. Sensitive password-hash material was exposed during the lab test; the raw value is not stored in this repository and must be treated as sensitive pending credential rotation.
+
+**system_auth metadata:** The keyspace replication strategy was changed from SimpleStrategy RF=3 to NetworkTopologyStrategy dc1=3. Schema agreement and three live nodes were verified afterward. A pre-authentication system_auth snapshot named pre_auth_security_20261125 was created and verified on all three nodes.
+
+**Administrative exposure:** Cassandra JMX 7199 was observed bound to localhost. SSH listens on IPv4/IPv6 wildcard addresses, password authentication is enabled, and the public firewalld zone permits the SSH service. Cockpit socket was inactive. JMX Exporter listens on 0.0.0.0:9404; host firewall rules show LAB1 source allowlists for LAB2/LAB3 exporter endpoints. Full reachability validation remains pending.
+
+**Application integration readiness:** Cassandra client dependencies were identified in cassandra_connection.py, transaction_insert.py, transaction_concurrent_test.py and slow_query_lab.py. The central connection factory has not yet been reviewed for credential integration. No Cassandra authentication or authorization rollout has been performed.
+
+**Slow-query automation:** The banking-slow-query.timer unit is now verified enabled and active on LAB1. Multiple successful timer-triggered executions and repeated metric updates still need to be verified. Grafana/Prometheus deployment of the prepared dashboard and alert templates remains pending.
+
+**Next actions:** Review the Python connection factory; inventory all Cassandra clients; design dedicated DBA, application and read-only roles; plan credential rotation and staged authentication/authorization rollout; then plan client/internode TLS, audit logging and SSH/monitoring endpoint hardening.
+
+No Cassandra authenticator/authorizer change, TLS change, audit-logging change, SSH hardening, firewall modification or Cassandra restart was performed during the security-audit activity. The system_auth replication-strategy update is the only Cassandra configuration metadata change recorded for that activity.
