@@ -1,5 +1,7 @@
 # Engineering Documentation
 
+- [Cassandra security audit and authentication readiness – 25 November 2026](../daily-activity/2026-11-25-cassandra-security-audit.md)
+
 - [Project history – from initial lab setup to current state](project-history/project-from-start-to-current.md)
 - [Troubleshooting, RCA and corrective action register](troubleshooting/incident-rca-register.md)
 - [Performance baseline and analysis](performance/performance-baseline-and-analysis.md)
