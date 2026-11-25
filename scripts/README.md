@@ -4,7 +4,7 @@ This directory contains version-controlled scripts and supporting configuration 
 
 ## Script collections
 
-- [Cassandra slow-query monitoring](slow-query-monitoring/README.md) – 100-query synthetic read workload, per-run CSV latency report, Prometheus textfile exporter, and systemd service/timer templates.
+- [Cassandra slow-query monitoring](slow-query-monitoring/README.md) – 100-query synthetic read workload, per-run CSV latency report, Prometheus textfile exporter, systemd service/timer templates, Grafana dashboard JSON and Prometheus alert rules.
 
 ## Usage and safety
 
