@@ -8,6 +8,7 @@ This folder records project work by date. Every entry separates verified executi
 - [17 November 2026 – Commit Log archiving preparation](2026-11-17.md)
 - [18 November 2026 – Cassandra workload benchmarking and performance diagnostics](2026-11-18.md)
 - [21 November 2026 – Cassandra JVM, thread-pool and Gossip diagnostics follow-up](2026-11-21.md)
+- [25 November 2026 – Continuous Cassandra slow-query monitoring setup](2026-11-25.md)
 
 ## Consolidated earlier project history
 - [Project milestones](historical-milestones.md)
