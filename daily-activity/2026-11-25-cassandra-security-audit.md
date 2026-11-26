@@ -364,3 +364,43 @@ Pending:
 - Validate every scheduled/application client after authentication and authorization enforcement.
 
 No authorization, TLS, audit-logging, SSH or firewall changes have been made. The application-role logins and cross-node authenticated operation remain unverified.
+
+
+## 15. Latest pilot validation checkpoint – 25 November 2026
+
+The following results were captured after creating the DBA and application roles:
+
+### Application login tests on LAB3
+
+- Connected to VJC9LAB3 (192.168.62.136) as `banking_app` using an interactive password prompt. Login succeeded.
+- Executed a bounded SELECT against `banking_stream.bank_transactions` for partition date `2026-11-18` with `LIMIT 1`. One row was returned.
+- Connected to VJC9LAB3 as `banking_readonly` using its separate interactive password prompt. Login succeeded.
+- Executed the same bounded SELECT; the same one-row result was returned.
+- These tests validate the role credentials and CQL connectivity on LAB3. They do **not** validate read-only access control because the authorizer remains `AllowAllAuthorizer`.
+
+### Maintenance and cluster status
+
+- `systemctl is-active banking-slow-query.timer` returned `inactive`.
+- `systemctl is-active banking-slow-query.service` returned `inactive`.
+- `nodetool status` from LAB1 showed VJC9LAB1, VJC9LAB3 and VJC9LAB2 all in `UN` state in dc1.
+- The output included the previously observed note that effective ownership is meaningless when non-system keyspaces use different replication settings. This is an ownership-calculation warning, not a node-down indication.
+- The requested `nodetool clientstats` output from LAB3 was not included in the latest evidence. Client-connection inventory is therefore still pending.
+
+### Authorization rollout status
+
+The latest node configuration comparison remains:
+
+| Node | authenticator | authorizer |
+|---|---|---|
+| VJC9LAB1 | AllowAllAuthenticator | AllowAllAuthorizer |
+| VJC9LAB2 | AllowAllAuthenticator | AllowAllAuthorizer |
+| VJC9LAB3 | PasswordAuthenticator | AllowAllAuthorizer |
+
+No authorizer change to `CassandraAuthorizer` has been performed. The next authorization pilot is blocked pending LAB3 `nodetool clientstats` review and a final confirmation that no client workload is using LAB3. The DBA account and both application role logins are now verified on LAB3; authorization grants and allowed/denied-operation tests remain pending.
+
+### Current action boundary
+
+- Do not disable the default `cassandra` superuser yet.
+- Do not enable `CassandraAuthorizer` until required grants and the pilot-node client inventory are reviewed.
+- Keep the slow-query timer paused during the next maintenance/restart step.
+- No TLS, audit logging, SSH or firewall changes have been applied.
