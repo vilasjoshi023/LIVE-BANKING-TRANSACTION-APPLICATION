@@ -253,7 +253,7 @@ Completed:
 
 Not completed:
 - Cassandra connection factory source review and credential-injection design.
-- Validation of banking_app and banking_readonly logins (role presence is confirmed, but their login tests have not yet been reported).
+- Verification of banking_app and banking_readonly access restrictions (both role logins later succeeded; least-privilege enforcement remains pending because CassandraAuthorizer is not enabled).
 - PasswordAuthenticator rollout to LAB1 and LAB2; LAB3 pilot only is complete.
 - CassandraAuthorizer rollout and least-privilege grants.
 - Default superuser credential rotation and retirement.
@@ -321,7 +321,7 @@ The authenticated dba_admin session returned the following role inventory:
 | banking_app | true | false | Banking application runtime |
 | banking_readonly | true | false | Read-only/reporting client |
 
-The successful prompt dba_admin@cqlsh and subsequent LIST ROLES output verify that the dba_admin account authenticated successfully. The LIST ROLES output confirms that banking_app and banking_readonly exist with login enabled and superuser disabled. Their separate password-login tests have not yet been evidenced.
+The successful prompt dba_admin@cqlsh and subsequent LIST ROLES output verify that the dba_admin account authenticated successfully. The LIST ROLES output confirms that banking_app and banking_readonly exist with login enabled and superuser disabled. Their separate password-login tests subsequently succeeded on LAB3; see section 15. Authorization restrictions remain untested.
 
 No role was created with a superuser grant for the application or reporting roles.
 
@@ -354,7 +354,7 @@ Completed:
 - LAB1/LAB2 configuration comparison confirms they have not yet migrated to PasswordAuthenticator.
 
 Pending:
-- Verify login separately as banking_app and banking_readonly.
+- Verify least-privilege allowed/denied operations for banking_app and banking_readonly after CassandraAuthorizer is enabled.
 - Verify the current state of the slow-query timer and service before further maintenance.
 - Review whether application credentials should be held in a root-only environment file or a dedicated secret-management mechanism; do not populate credentials until client TLS is in place or an explicitly approved protected test path is defined.
 - Enable CassandraAuthorizer only after preparing and testing the required permissions and rollout/rollback plan.
