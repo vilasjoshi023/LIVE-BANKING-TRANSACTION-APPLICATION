@@ -27,3 +27,8 @@ The repository currently contains the searchable Markdown transcriptions and the
 - Validate commands and settings against the exact deployed Cassandra release and local package layout.
 - Examples and thresholds in the performance documents are source examples, not measurements or production SLAs for VJCLAB.
 - The security and operational work for VJCLAB is separately recorded in [the Cassandra security audit](../daily-activity/2026-11-25-cassandra-security-audit.md).
+
+
+## Original PDF binaries
+
+The original PDF files are **not yet present in the GitHub repository**. Their upload location, filenames, byte sizes and SHA-256 checksums are documented in [source-pdfs/README.md](source-pdfs/README.md). A prepared ZIP bundle containing the four original PDFs is intended to be extracted into this `docs/reference-library/` directory so that the files land in `source-pdfs/`. After extraction, commit and push that folder from a local clone.
