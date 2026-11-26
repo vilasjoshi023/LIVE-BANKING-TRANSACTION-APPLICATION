@@ -1,5 +1,8 @@
 # Engineering Documentation
 
+- [Cassandra reference library](reference-library/README.md)
+- [Cassandra security audit and authentication readiness](../daily-activity/2026-11-25-cassandra-security-audit.md)
+
 - [Cassandra security audit and authentication readiness – 25 November 2026](../daily-activity/2026-11-25-cassandra-security-audit.md)
 
 - [Project history – from initial lab setup to current state](project-history/project-from-start-to-current.md)
