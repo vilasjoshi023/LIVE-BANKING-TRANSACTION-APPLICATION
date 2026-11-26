@@ -10,6 +10,7 @@ This folder records project work by date. Every entry separates verified executi
 - [21 November 2026 – Cassandra JVM, thread-pool and Gossip diagnostics follow-up](2026-11-21.md)
 - [25 November 2026 – Continuous Cassandra slow-query monitoring setup](2026-11-25.md)
 - [25 November 2026 – Cassandra security audit and authentication readiness](2026-11-25-cassandra-security-audit.md)
+- [26 November 2026 – Cassandra security checkpoint and reference library](2026-11-26.md)
 
 ## Consolidated earlier project history
 - [Project milestones](historical-milestones.md)
