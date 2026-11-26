@@ -80,3 +80,16 @@ See docs/README.md and daily-activity/README.md.
 **Next actions:** Review the Python connection factory; inventory all Cassandra clients; design dedicated DBA, application and read-only roles; plan credential rotation and staged authentication/authorization rollout; then plan client/internode TLS, audit logging and SSH/monitoring endpoint hardening.
 
 No Cassandra authenticator/authorizer change, TLS change, audit-logging change, SSH hardening, firewall modification or Cassandra restart was performed during the security-audit activity. The system_auth replication-strategy update is the only Cassandra configuration metadata change recorded for that activity.
+
+
+## Current project status – 26 November 2026
+
+**Cassandra security pilot:** PasswordAuthenticator is enabled on VJC9LAB3 only; VJC9LAB1 and VJC9LAB2 remain on AllowAllAuthenticator. The dba_admin, banking_app and banking_readonly roles exist on LAB3. Separate dba_admin, banking_app and banking_readonly login tests succeeded; both application roles completed a bounded SELECT. All nodes still use AllowAllAuthorizer, so role permission boundaries are not yet enforced. LAB3 authorization rollout is pending the node clientstats review.
+
+**Application integration:** The shared Python connection factory supports optional PlainTextAuthProvider authentication. Syntax validation and a connection test passed with the current anonymous configuration; LOCAL_QUORUM was preserved. The application .env file is mode 0600. No real application credentials were added to the file or repository.
+
+**Latest maintenance checkpoint:** The slow-query timer and service were both verified inactive. nodetool status showed all three Cassandra nodes UN. LAB3 nodetool clientstats output remains outstanding. No CassandraAuthorizer, TLS, audit logging, SSH hardening or firewall changes have been applied.
+
+**Reference library:** Searchable transcriptions and page guide for four user-supplied Cassandra PDF references are indexed in [docs/reference-library](docs/reference-library/README.md). The original PDF binary attachments are not committed; the repository contains Markdown text transcriptions for the text-readable PDFs and a page-by-page visual guide for the image-only infographic PDF.
+
+See [the detailed security activity](daily-activity/2026-11-25-cassandra-security-audit.md) and [26 November checkpoint](daily-activity/2026-11-26.md).
