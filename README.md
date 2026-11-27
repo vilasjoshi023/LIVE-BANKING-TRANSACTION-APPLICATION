@@ -93,3 +93,16 @@ No Cassandra authenticator/authorizer change, TLS change, audit-logging change, 
 **Reference library:** Searchable transcriptions and page guide for four user-supplied Cassandra PDF references are indexed in [docs/reference-library](docs/reference-library/README.md). The original PDF binary attachments are not committed; the repository contains Markdown text transcriptions for the text-readable PDFs and a page-by-page visual guide for the image-only infographic PDF.
 
 See [the detailed security activity](daily-activity/2026-11-25-cassandra-security-audit.md) and [26 November checkpoint](daily-activity/2026-11-26.md).
+
+
+## Apache Cassandra DBA Master Program – project learning path
+
+The project's structured Cassandra learning path follows the uploaded **Apache Cassandra DBA Master Program** 18-section curriculum. It is adapted to the existing VJCLAB three-node Cassandra 4.1.12 environment and the Live Banking synthetic workload.
+
+- [VJCLAB learning roadmap](docs/learning-roadmap/apache-cassandra-dba-master-program-vjclab.md)
+- [Source syllabus transcription](docs/reference-library/apache-cassandra-dba-master-program-source-syllabus.md)
+- [Cassandra reference library](docs/reference-library/README.md)
+
+Current continuation point: finish the Section 10 security/access-control pilot safely (LAB3 authentication is working; authorization enforcement and remaining-node rollout are pending). Then progress through multi-node operations, daily DBA work, repair/maintenance, backup/restore, PITR, monitoring and performance, followed by the remaining fundamentals and isolated upgrade/modernization topics. Cassandra 5.x-only SAI and 4.x-to-5.x upgrade work will not be applied to the 4.1.12 cluster.
+
+The original Master Program PDF and the four earlier Cassandra PDFs are included in the updated local upload bundle, but their PDF binaries are not yet committed to the repository. See [source PDF upload instructions](docs/reference-library/source-pdfs/README.md).
