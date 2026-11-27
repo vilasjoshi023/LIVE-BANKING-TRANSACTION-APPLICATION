@@ -40,6 +40,12 @@ Every section uses the same delivery loop:
 
 No destructive node lifecycle, repair, cleanup, decommission, snapshot deletion, upgrade, or security restart exercise will be run without an explicit pre-check, recovery plan and controlled step-by-step validation.
 
+## Topic-wise learning pages
+
+Each of the 18 curriculum sections has its own GitHub page with the source syllabus topics, VJCLAB practical plan, evidence checklist, safety/version controls and interview checkpoints.
+
+- [Open the 18-topic tracker](topics/README.md)
+
 ## Curriculum and lab mapping
 
 | Section | Master Program topic | Planned VJCLAB practical work | Tracking |
