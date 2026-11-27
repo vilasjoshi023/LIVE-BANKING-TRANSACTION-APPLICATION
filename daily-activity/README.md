@@ -11,6 +11,7 @@ This folder records project work by date. Every entry separates verified executi
 - [25 November 2026 – Continuous Cassandra slow-query monitoring setup](2026-11-25.md)
 - [25 November 2026 – Cassandra security audit and authentication readiness](2026-11-25-cassandra-security-audit.md)
 - [26 November 2026 – Cassandra security checkpoint and reference library](2026-11-26.md)
+- [27 November 2026 – Apache Cassandra DBA Master Program learning roadmap](2026-11-27.md)
 
 ## Consolidated earlier project history
 - [Project milestones](historical-milestones.md)
