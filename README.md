@@ -100,6 +100,7 @@ See [the detailed security activity](daily-activity/2026-11-25-cassandra-securit
 The project's structured Cassandra learning path follows the uploaded **Apache Cassandra DBA Master Program** 18-section curriculum. It is adapted to the existing VJCLAB three-node Cassandra 4.1.12 environment and the Live Banking synthetic workload.
 
 - [VJCLAB learning roadmap](docs/learning-roadmap/apache-cassandra-dba-master-program-vjclab.md)
+- [18 topic-wise learning pages](docs/learning-roadmap/topics/README.md)
 - [Source syllabus transcription](docs/reference-library/apache-cassandra-dba-master-program-source-syllabus.md)
 - [Cassandra reference library](docs/reference-library/README.md)
 
