@@ -10,6 +10,7 @@ The original PDF attachments are packaged for upload into this directory. The re
 | `cassandra performance tuning with solutions's.pdf` | 2546004 | `734109fbd8f3478ca8873521281f43637137da3d837085a5f1ae0348018b9e47` |
 | `Cassandra_Database_Administrator_Complete_Guide.pdf` | 177677 | `bc1e02a5f211e07069d2fff1f777cf74b905d271ce660eadfb5c3f56ce444066` |
 | `Cassandra_DBA_Beginner_to_Advanced_Practical_Workbook.pdf` | 94688 | `87d5b89826533faa8ef004a22eefd3e9f040bebb58173f2e990d979afc67c558` |
+| `Apache Cassandra DBA Master Program.pdf` | 466063 | `1036984b523ff08efe4adcb36061ab3ddaae7e24f256a8bbc4243640d6e992f3` |
 
 ## Upload procedure
 
@@ -26,4 +27,4 @@ git push origin main
 
 4. Verify the four PDF files appear in this directory on GitHub.
 
-The files are the original uploaded PDFs. Do not add passwords, .env files, private keys, database snapshots, SSTables or live application data.
+The ZIP bundle now contains all five original uploaded PDFs, including `Apache Cassandra DBA Master Program.pdf`. Do not add passwords, .env files, private keys, database snapshots, SSTables or live application data.
