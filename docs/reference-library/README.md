@@ -1,6 +1,6 @@
 # Cassandra Reference Library
 
-This folder contains searchable repository versions and page guides prepared from four user-provided PDF references.
+This folder contains searchable repository versions, page guides and curriculum documents prepared from five user-provided Cassandra PDF references.
 
 ## Source documents
 
@@ -10,6 +10,7 @@ This folder contains searchable repository versions and page guides prepared fro
 | `cassandra performance tuning with solutions's.pdf` | 9 | [Page-by-page infographic guide](cassandra-production-scenarios-infographics-page-guide.md) | Nine visual production scenarios: general DBA experience, capacity planning, disk 95%, pending compactions, hot partition, JVM GC, tombstones, high write latency and high read latency |
 | `Cassandra_Database_Administrator_Complete_Guide.pdf` | 62 | [Searchable page text](cassandra-database-administrator-complete-guide-source-text.md) | Cassandra 4.1.x DBA concepts, architecture, operations, backup/recovery, performance, security, monitoring and incidents |
 | `Cassandra_DBA_Beginner_to_Advanced_Practical_Workbook.pdf` | 28 | [Searchable page text](cassandra-dba-beginner-to-advanced-practical-workbook-source-text.md) | Guided CentOS Stream 9 / Cassandra 4.1.12 lab roadmap, CQL, modeling, consistency, nodetool, repair, backup, performance, security and interview practice |
+| `Apache Cassandra DBA Master Program.pdf` | 6 | [Source syllabus](apache-cassandra-dba-master-program-source-syllabus.md) and [VJCLAB learning roadmap](../learning-roadmap/apache-cassandra-dba-master-program-vjclab.md) | 18-section curriculum covering NoSQL, setup, architecture, internals, modeling, CQL, indexing, security, operations, repair, backup/PITR, monitoring, performance and modernization |
 
 ## Page-range navigation
 
